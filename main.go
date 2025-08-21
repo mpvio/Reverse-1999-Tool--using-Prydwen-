@@ -8,5 +8,5 @@ import (
 func main() {
 	characters, psychubes := controllers.GetLists()
 	view.Display(characters, psychubes)
-	controllers.GetCharacter("MEDICINE POCKET")
+	controllers.GetCharacter("sonetto")
 }
