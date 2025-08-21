@@ -1,6 +1,10 @@
 package models
 
-import "golangR99/constants"
+import (
+	"encoding/json"
+	"golangR99/constants"
+	"log"
+)
 
 type ItemList struct {
 	Data Data `json:"data"`
@@ -16,9 +20,10 @@ type Content struct {
 }
 
 type Node struct {
+	// slug and name also used in character file for recommended psychubes
 	Slug   string `json:"slug"`
 	Name   string `json:"name"`
-	Rarity string `json:"rarity"`
+	Rarity string `json:"rarity,omitempty"`
 	// exclusive to psychubes
 	Stats        Stats             `json:"stats,omitzero"`
 	Description1 DescriptionAsText `json:"descriptionLevel1,omitzero"`
@@ -48,6 +53,16 @@ type SingleStat struct {
 	Name string `json:"name,omitempty,omitzero"`
 }
 
+// for psychubes and full characters
 type DescriptionAsText struct {
 	Raw string `json:"raw,omitempty"`
+}
+
+func (dt DescriptionAsText) ConvertToJson() Raw {
+	var desc Raw
+	err := json.Unmarshal([]byte(dt.Raw), &desc)
+	if err != nil {
+		log.Fatal(err)
+	}
+	return desc
 }

@@ -5,6 +5,7 @@ import (
 	"golangR99/constants"
 	"golangR99/models"
 
+	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/app"
 	"fyne.io/fyne/v2/container"
 	"fyne.io/fyne/v2/widget"
@@ -22,6 +23,7 @@ func Display(characters, psychubes []models.Node) {
 	// set to container
 	top := container.NewGridWithColumns(2, charScroll, psyScroll)
 	w.SetContent(top)
+	w.Resize(fyne.NewSize(800, 400))
 	w.ShowAndRun()
 }
 
