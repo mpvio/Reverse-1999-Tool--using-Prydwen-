@@ -1,11 +1,5 @@
 package models
 
-import (
-	"encoding/json"
-	"golangR99/constants"
-	"log"
-)
-
 type ItemList struct {
 	Data Data `json:"data"`
 }
@@ -30,13 +24,6 @@ type Node struct {
 	Description5 DescriptionAsText `json:"descriptionLevel5,omitzero"`
 }
 
-func (n Node) GetType() string {
-	if n.Stats == (Stats{}) {
-		return constants.CHARACTER
-	}
-	return constants.PSYCHUBE
-}
-
 // exclusive to psychubes
 type Stats struct {
 	Atk        SingleStat `json:"atk,omitzero"`
@@ -56,13 +43,4 @@ type SingleStat struct {
 // for psychubes and full characters
 type DescriptionAsText struct {
 	Raw string `json:"raw,omitempty"`
-}
-
-func (dt DescriptionAsText) ConvertToJson() Raw {
-	var desc Raw
-	err := json.Unmarshal([]byte(dt.Raw), &desc)
-	if err != nil {
-		log.Fatal(err)
-	}
-	return desc
 }
