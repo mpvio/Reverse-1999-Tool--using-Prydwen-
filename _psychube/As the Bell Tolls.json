@@ -1,0 +1,33 @@
+{
+    "name": "As the Bell Tolls",
+    "rarity": "6",
+    "availableInGlobal": true,
+    "stats": {
+        "atk": {
+            "base": 57,
+            "max": 380
+        },
+        "hp": {
+            "base": 390,
+            "max": 2600
+        },
+        "mental_def": {
+            "base": 24,
+            "max": 160
+        },
+        "reality_def": {
+            "base": 24,
+            "max": 160
+        },
+        "custom": {
+            "base": 4,
+            "max": 10,
+            "name": "ATK"
+        }
+    },
+    "description": "When attacking, if the carrier is an [Assassination] character, for every 100 points of Critical Technique the carrier has more than the target, gains DMG Dealt +{1%} -> {2%} for this attack.",
+    "tags": [
+        "ATK",
+        "Critical"
+    ]
+}

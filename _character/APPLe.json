@@ -1,0 +1,165 @@
+{
+    "name": "APPLe",
+    "rarity": "4",
+    "afflatus": "Star",
+    "damageType": "Mental",
+    "tierListCategory": "Sub DPS",
+    "tags": [
+        "DPS",
+        "Heal"
+    ],
+    "availableInGlobal": true,
+    "ratingsNew": 4,
+    "tierComment": "A free character obtainable at the start of the game, APPLe focuses on passively healing the team with his attacks and at the start of every turn. His damage is on the low end and he isn't suited for burst healing, but he can still be useful in the early game—especially since the game reimburses you with the materials spent upgrading him to Insight I.",
+    "skills": [
+        {
+            "name": "Insignificant Achievements",
+            "category": "Ultimate",
+            "description": "Mass attack. Deals 300% Mental DMG to all enemies. HP +(the caster's ATK x100%) for the ally with the lowest HP percentage."
+        },
+        {
+            "name": "Iridescent White",
+            "category": "Skill",
+            "description": "1-target attack. Deals [1 -> 2 -> 3]{200%} -> {300%} -> {500%} Mental DMG.",
+            "type": "Attack"
+        },
+        {
+            "name": "Equal Amount of Light",
+            "category": "Skill",
+            "description": "1-target attack. Deals [1 -> 2 -> 3]{150%} -> {225%} -> {375%} Mental DMG. HP +(the caster's ATK x[1 -> 2 -> 3]{40%} -> {60%} -> {100%}) for the ally with the lowest HP.",
+            "type": "Attack"
+        }
+    ],
+    "insights": {
+        "name": "Wine",
+        "level1": "At the start of the round, recover (each ally's own Missing HP x8%) HP for all allies.",
+        "level2": "When entering battle, Healing Done +10%."
+    },
+    "portray": {
+        "level1": "Insignificant Achievement's effect changes to: HP +(the caster's ATK x150%) for the ally with the lowest HP percentage.",
+        "level2": "Iridescent White: At Incantation rank 1/2/3, Mental DMG increased to 220/330/550%.",
+        "level3": "Equal Amount of Light's effect changes to: at 1/2/3 stars, HP +(the caster's ATK x56/84/140%).",
+        "level4": "Insignificant Achievement's effect changes to: HP +(the caster's ATK x200%) for the ally with the lowest HP percentage.",
+        "level5": "Insignificant Achievement's effect changes to: HP +(the caster's ATK x250%) for the ally with the lowest HP percentage."
+    },
+    "pros": "Free character with free Insight IVersatile, can offer a mix of damage and sustainCan heal passively, thus saving action pointsLow rarity, cheap to build",
+    "cons": "Less effective in terms of healing compared to other dedicated healersBy having a mixed kit and role, doesn't excel in either damage or healingNot recommended for boss fights, as his healing won't be able to keep up with burst damage, and his damage won't contribute much to the fight itselfHis low rarity means he is very squishy",
+    "materials": {
+        "insight_1": [
+            {
+                "name": "Sharpodonty",
+                "amount": 8000
+            },
+            {
+                "name": "Page of Starlit Ascent",
+                "amount": 4
+            },
+            {
+                "name": "Silver Ore",
+                "amount": 4
+            },
+            {
+                "name": "Milled Magnesia",
+                "amount": 2
+            }
+        ],
+        "insight_2": [
+            {
+                "name": "Sharpodonty",
+                "amount": 25000
+            },
+            {
+                "name": "Scroll of Starlit Ascent",
+                "amount": 8
+            },
+            {
+                "name": "Spell of Fortune",
+                "amount": 5
+            },
+            {
+                "name": "Bifurcated Skeleton",
+                "amount": 2
+            }
+        ],
+        "insight_3": [
+            {
+                "name": "Material",
+                "amount": 0
+            },
+            {
+                "name": "Material",
+                "amount": 0
+            },
+            {
+                "name": "Material",
+                "amount": 0
+            },
+            {
+                "name": "Material",
+                "amount": 0
+            }
+        ],
+        "total": {
+            "Bifurcated Skeleton": 2,
+            "Material": 0,
+            "Milled Magnesia": 2,
+            "Page of Starlit Ascent": 4,
+            "Scroll of Starlit Ascent": 8,
+            "Sharpodonty": 33000,
+            "Silver Ore": 4,
+            "Spell of Fortune": 5
+        }
+    },
+    "psychubeSuggested": [
+        "Her Second Life",
+        "Belt It Out",
+        "Melodies Old and New",
+        "Laughter and Laughter",
+        "Take the Hard Journey"
+    ],
+    "psychubeComments": "Her Second Life turns his ultimate's healing from single-target to AoE and increases his low ATK.Belt It Out is a great supportive psychube that increases all Star-afflatus characters' DMG Dealt. Its increase to APPLe's personal ATK also boosts his ultimate and skill healing.Melodies Old and New is another great supportive psychube; 3–9% DMG Bonus for the whole team and 12–16% Healing Bonus is a great way to make APPLe more useful.Laughter and Laughter is completely free and super cheap to build. It takes some time to stack up, but nothing beats a cheap beginner build to get you through the early chapters of the game.Take the Hard Journey increases his healing. APPLe's low DEF makes the passive healing bonus easy to trigger.Despite having his face on it, An Afternoon Nap isn't particularly good for APPLe. His ultimate is AoE and he doesn't even have very high Critical Rate, so the Critical DMG isn't very relevant.",
+    "characterStats": {
+        "atk": {
+            "insight_0_min": 231,
+            "insight_1_max": 588,
+            "insight_2_max": 876,
+            "insight_3_max": 0
+        },
+        "hp": {
+            "insight_0_min": 1250,
+            "insight_1_max": 3180,
+            "insight_2_max": 4742,
+            "insight_3_max": 0
+        },
+        "reality_def": {
+            "insight_0_min": 95,
+            "insight_1_max": 240,
+            "insight_2_max": 358,
+            "insight_3_max": 0
+        },
+        "mental_def": {
+            "insight_0_min": 126,
+            "insight_1_max": 319,
+            "insight_2_max": 475,
+            "insight_3_max": 0
+        },
+        "crit": {
+            "insight_0_min": 200,
+            "insight_1_max": 226,
+            "insight_2_max": 252,
+            "insight_3_max": 0
+        },
+        "crit_rate": {
+            "insight_0_min": 6.7,
+            "insight_1_max": 7.56,
+            "insight_2_max": 8.43,
+            "insight_3_max": 0
+        },
+        "crit_dmg": {
+            "insight_0_min": 140,
+            "insight_1_max": 141.3,
+            "insight_2_max": 142.6,
+            "insight_3_max": 0
+        }
+    }
+}

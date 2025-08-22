@@ -1,0 +1,13 @@
+{
+    "name": "Alexios",
+    "rarity": "5",
+    "afflatus": "Beast",
+    "damageType": "Reality",
+    "availableInGlobal": true,
+    "ratingsNew": 1,
+    "materials": {
+        "insight_1": null,
+        "insight_2": null,
+        "total": {}
+    }
+}

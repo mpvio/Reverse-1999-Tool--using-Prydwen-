@@ -5,6 +5,10 @@ import (
 	"golangR99/constants"
 )
 
+func (c Character) Convert() CharacterDB {
+	return c.Result.Data.CurrentUnit.Nodes[0].Convert()
+}
+
 func (c CharacterNode) Convert() CharacterDB {
 	return CharacterDB{
 		Name:               c.Name,
