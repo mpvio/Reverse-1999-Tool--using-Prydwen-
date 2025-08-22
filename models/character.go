@@ -269,6 +269,15 @@ type Convertible[T any] interface {
 	Convert() T
 }
 
+// "S ~[]E" = take any slice S whose elements are type E
+// "E Convertible[T]" = E implements Convertible and returns a type T (constraint)
+// "T any" = the aforementioned type T
+func ConvertSlice[S ~[]E, E Convertible[T], T any](slice S) []T {
+	return MapSlice(slice, func(e E) T { return e.Convert() })
+}
+
+// "mapper func(E) T" = function that takes parameter of type E and returns type T
+// E has no constraint to enable direct calls to MapSlice (e.g. for nodes)
 func MapSlice[S ~[]E, E any, T any](slice S, mapper func(E) T) []T {
 	if slice == nil {
 		return nil
@@ -278,10 +287,6 @@ func MapSlice[S ~[]E, E any, T any](slice S, mapper func(E) T) []T {
 		result[i] = mapper(val)
 	}
 	return result
-}
-
-func ConvertSlice[S ~[]E, E Convertible[T], T any](slice S) []T {
-	return MapSlice(slice, func(e E) T { return e.Convert() })
 }
 
 func convertNodesToStrings(nodes []Node) []string {
