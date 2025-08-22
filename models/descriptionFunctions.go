@@ -7,7 +7,7 @@ import (
 )
 
 func (r Raw) GetString() string {
-	return strings.ReplaceAll(strings.TrimSpace(parseContentArr(r.Content)), "\n\n", "\n")
+	return strings.ReplaceAll(strings.ReplaceAll(strings.TrimSpace(parseContentArr(r.Content)), "\n\n", "\n"), "–", "-")
 }
 
 func (r Raw) GetDiff(other Raw) string {
