@@ -19,6 +19,9 @@ const (
 	// item types
 	CHARACTER = "character"
 	PSYCHUBE  = "psychube"
+	// skill types
+	ULTIMATE = "Ultimate"
+	SKILL    = "Skill"
 )
 
 func GET_CHARACTER_ENDPOINT(name string) string {
