@@ -7,7 +7,7 @@ import (
 )
 
 func (r Raw) GetString() string {
-	return parseContentArr(r.Content)
+	return strings.ReplaceAll(strings.TrimSpace(parseContentArr(r.Content)), "\n\n", "\n")
 }
 
 func (r Raw) GetDiff(other Raw) string {
@@ -23,7 +23,7 @@ func (ci ContentItem) GetString() string {
 	case constants.TEXT:
 		return ci.Value
 	default:
-		return parseContentArr(ci.Content)
+		return fmt.Sprintf("%s\n", parseContentArr(ci.Content))
 	}
 }
 

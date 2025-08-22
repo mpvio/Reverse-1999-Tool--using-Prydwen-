@@ -107,6 +107,7 @@ func (t TierComment) Convert() string {
 	return t.TierComment
 }
 
+// todo: add validator to remove Insight3 if it's just "Material": 0
 func (m Materials) Convert() MaterialsDB {
 	total := make(map[string]int)
 	insights := [][]Material{m.Insight1, m.Insight2, m.Insight3}
