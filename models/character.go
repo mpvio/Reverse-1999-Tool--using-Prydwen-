@@ -49,7 +49,6 @@ type CharacterNode struct {
 }
 
 func (c CharacterNode) Convert() CharacterDB {
-	// return
 	return CharacterDB{
 		Name:               c.Name,
 		Rarity:             c.Rarity,
@@ -62,7 +61,7 @@ func (c CharacterNode) Convert() CharacterDB {
 		AvailableInGlobal:  c.AvailableInGlobal,
 		Rating:             c.Rating.Base,
 		TierComment:        c.TierComment.TierComment,
-		Skills:             convertSkillArr(c.Skills),
+		Skills:             ConvertSlice(c.Skills),
 		Insights:           c.Insights.Convert(),
 		Portray:            c.Portray.Convert(),
 		Pros:               c.Pros.ConvertToJson().GetString(),
@@ -71,8 +70,8 @@ func (c CharacterNode) Convert() CharacterDB {
 		SuggestedPsychubes: convertNodesToStrings(c.SuggestedPsychubes),
 		PsychubeComments:   c.PsychubeComments.ConvertToJson().GetString(),
 		CharacterStats:     c.CharacterStats, // keep the same for now
-		Euphoria:           convertEuphoriaArr(c.Euphoria),
-		Resonance:          convertResonanceArr(c.Resonance),
+		Euphoria:           ConvertSlice(c.Euphoria),
+		Resonance:          ConvertSlice(c.Resonance),
 	}
 }
 
@@ -90,7 +89,7 @@ func (i Inheritance) Convert() InsightsDB {
 		Level1: i.Level1.ConvertToJson().GetString(),
 		Level2: i.Level2.ConvertToJson().GetString(),
 		Level3: i.Level3.ConvertToJson().GetString(),
-		Status: convertStatusArr(i.Status),
+		Status: ConvertSlice(i.Status),
 	}
 }
 
@@ -145,7 +144,7 @@ func (s Skill) Convert() SkillDB {
 		Category: s.Category,
 		Desc:     s.DescToString(),
 		Type:     s.TypeToString(),
-		Status:   convertStatusArr(s.Status),
+		Status:   ConvertSlice(s.Status),
 	}
 }
 
@@ -266,42 +265,25 @@ func (r Resonance) Convert() ResonanceDB {
 }
 
 // helper function(s)
-func convertStatusArr(statuses []Status) []StatusDB {
-	result := make([]StatusDB, len(statuses))
-	for i, val := range statuses {
-		result[i] = val.Convert()
+type Convertible[T any] interface {
+	Convert() T
+}
+
+func MapSlice[S ~[]E, E any, T any](slice S, mapper func(E) T) []T {
+	if slice == nil {
+		return nil
+	}
+	result := make([]T, len(slice))
+	for i, val := range slice {
+		result[i] = mapper(val)
 	}
 	return result
 }
 
-func convertSkillArr(skills []Skill) []SkillDB {
-	result := make([]SkillDB, len(skills))
-	for i, val := range skills {
-		result[i] = val.Convert()
-	}
-	return result
-}
-
-func convertEuphoriaArr(euphorias []Euphoria) []EuphoriaDB {
-	result := make([]EuphoriaDB, len(euphorias))
-	for i, val := range euphorias {
-		result[i] = val.Convert()
-	}
-	return result
-}
-
-func convertResonanceArr(resonances []Resonance) []ResonanceDB {
-	result := make([]ResonanceDB, len(resonances))
-	for i, val := range resonances {
-		result[i] = val.Convert()
-	}
-	return result
+func ConvertSlice[S ~[]E, E Convertible[T], T any](slice S) []T {
+	return MapSlice(slice, func(e E) T { return e.Convert() })
 }
 
 func convertNodesToStrings(nodes []Node) []string {
-	result := make([]string, len(nodes))
-	for i, val := range nodes {
-		result[i] = val.Name
-	}
-	return result
+	return MapSlice(nodes, func(n Node) string { return n.Name })
 }
