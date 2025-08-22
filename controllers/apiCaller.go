@@ -2,7 +2,6 @@ package controllers
 
 import (
 	"encoding/json"
-	"fmt"
 	"golangR99/constants"
 	"golangR99/models"
 	"io"
@@ -10,7 +9,7 @@ import (
 	"net/http"
 )
 
-func GetCharacter(name string) models.Character {
+func GetCharacter(name string) models.CharacterDB {
 	uri := constants.GET_CHARACTER_ENDPOINT(name)
 	content := getBytesFromEndpoint(uri)
 	// cast to character
@@ -19,17 +18,9 @@ func GetCharacter(name string) models.Character {
 	if err != nil {
 		log.Fatal(err)
 	}
-	// test prints
-	skills := character.Result.Data.CurrentUnit.Nodes[0].Skills
-	for _, skill := range skills {
-		fmt.Println(skill.DescToString())
-		fmt.Println(skill.TypeToString())
-		fmt.Println(skill.Status)
-	}
 	// return character
 	new_char := character.Result.Data.CurrentUnit.Nodes[0].Convert()
-	fmt.Println(new_char.Name)
-	return character
+	return new_char
 }
 
 func GetPsychube(name string, nodes []models.Node) models.PsychubeDB {
