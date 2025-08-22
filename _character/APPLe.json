@@ -81,24 +81,6 @@
                 "amount": 2
             }
         ],
-        "insight_3": [
-            {
-                "name": "Material",
-                "amount": 0
-            },
-            {
-                "name": "Material",
-                "amount": 0
-            },
-            {
-                "name": "Material",
-                "amount": 0
-            },
-            {
-                "name": "Material",
-                "amount": 0
-            }
-        ],
         "total": {
             "Bifurcated Skeleton": 2,
             "Milled Magnesia": 2,

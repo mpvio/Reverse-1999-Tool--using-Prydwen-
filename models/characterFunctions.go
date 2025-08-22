@@ -107,10 +107,18 @@ func (t TierComment) Convert() string {
 	return t.TierComment
 }
 
-// todo: add validator to remove Insight3 if it's just "Material": 0
+// todo: add validator (to Material too) to remove Insight3 if it's just "Material": 0
 func (m Materials) Convert() MaterialsDB {
 	total := make(map[string]int)
-	insights := [][]Material{m.Insight1, m.Insight2, m.Insight3}
+	// only 5 & 6* characters have Insight 3 materials
+	insight3valid := materialSliceValidity(m.Insight3)
+	insights := [][]Material{m.Insight1, m.Insight2}
+	var insight3 []Material
+	if insight3valid {
+		insights = append(insights, m.Insight3)
+		insight3 = m.Insight3
+	}
+	// add insight costs
 	for _, insight := range insights {
 		for _, v := range insight {
 			_, ok := total[v.Name]
@@ -125,9 +133,30 @@ func (m Materials) Convert() MaterialsDB {
 	return MaterialsDB{
 		Insight1: m.Insight1,
 		Insight2: m.Insight2,
-		Insight3: m.Insight3,
+		Insight3: insight3, // [] if insight3valid == false
 		Total:    total,
 	}
+}
+
+func (m Materials) GetValidInsights() [][]Material {
+	var insights [][]Material
+	if materialSliceValidity(m.Insight1) {
+		insights = append(insights, m.Insight1)
+	}
+	if materialSliceValidity(m.Insight2) {
+		insights = append(insights, m.Insight2)
+	}
+	if materialSliceValidity(m.Insight3) {
+		insights = append(insights, m.Insight3)
+	}
+	return insights
+}
+
+func (m Material) Valid() bool {
+	if m.Name == "Material" || m.Amount == 0 {
+		return false
+	}
+	return true
 }
 
 func (e Euphoria) Convert() EuphoriaDB {
@@ -146,6 +175,15 @@ func (r Resonance) Convert() ResonanceDB {
 }
 
 // helper function(s)
+func materialSliceValidity(materials []Material) bool {
+	for _, m := range materials {
+		if !m.Valid() {
+			return false
+		}
+	}
+	return true
+}
+
 type Convertible[T any] interface {
 	Convert() T
 }
