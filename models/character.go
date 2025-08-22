@@ -277,7 +277,7 @@ func ConvertSlice[S ~[]E, E Convertible[T], T any](slice S) []T {
 }
 
 // "mapper func(E) T" = function that takes parameter of type E and returns type T
-// E has no constraint to enable direct calls to MapSlice (e.g. for nodes)
+// E has no constraint to enable direct calls to MapSlice (e.g. for types w/o Convert, like Node)
 func MapSlice[S ~[]E, E any, T any](slice S, mapper func(E) T) []T {
 	if slice == nil {
 		return nil
