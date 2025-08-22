@@ -27,6 +27,10 @@ func (r Raw) GetDiff(other Raw) string {
 	return contentArrDiff(r.Content[0].Content, other.Content[0].Content)
 }
 
+func (r Raw) Get3Diff(b, c Raw) string {
+	return content3Diff(r.Content[0].Content, b.Content[0].Content, c.Content[0].Content)
+}
+
 type ContentItem struct {
 	Data     map[string]any `json:"data,omitempty"` // remove?
 	Content  []ContentItem  `json:"content,omitempty"`
@@ -86,6 +90,58 @@ func (ci ContentItem) GetDiff(other ContentItem) string {
 	}
 }
 
+func (ci ContentItem) Get3Diff(b, c ContentItem) string {
+	ab, _ := ci.Equals(b)
+	bc, _ := b.Equals(c)
+	// a == b == c
+	if ab && bc {
+		return ci.GetString()
+	}
+	// a = b, b != c
+	if ab && !bc {
+		if ci.HasValue() && c.HasValue() {
+			return fmt.Sprintf("[1 -> 3]{%s} -> {%s}", ci.GetString(), c.GetString())
+		} else {
+			return fmt.Sprintf("[1 -> 3]{%s}", contentArrDiff(ci.Content, c.Content))
+		}
+	}
+	// a != b, b = c
+	if !ab && bc {
+		if ci.HasValue() && b.HasValue() {
+			return fmt.Sprintf("[1 -> 2]{%s} -> {%s}", ci.GetString(), b.GetString())
+		} else {
+			return fmt.Sprintf("[1 -> 2]{%s}", contentArrDiff(ci.Content, b.Content))
+		}
+	}
+	// a != b != c
+	aValue, bValue, cValue := ci.HasValue(), b.HasValue(), c.HasValue()
+	var aStr, bStr, cStr string
+
+	if aValue {
+		aStr = ci.GetString()
+	}
+	if bValue {
+		bStr = b.GetString()
+	}
+	if cValue {
+		cStr = c.GetString()
+	}
+
+	// if all have values, just get their strings
+	if aValue && bValue && cValue {
+		return fmt.Sprintf("[1 -> 2 -> 3]{%s} -> {%s} -> {%s}", aStr, bStr, cStr)
+	}
+	// else, use content3Diff to get diffs for contentItems that don't.
+	if aValue && bValue && !cValue {
+		return fmt.Sprintf("[1 -> 2 -> 3]{%s} -> {%s} {%s}", aStr, bStr, content3Diff(ci.Content, b.Content, c.Content))
+	}
+	if aValue && !bValue && !cValue {
+		return fmt.Sprintf("[1 -> 2 -> 3]{%s} {%s}", aStr, content3Diff(ci.Content, b.Content, c.Content))
+	} else {
+		return fmt.Sprintf("[1 -> 2 -> 3]{%s}", content3Diff(ci.Content, b.Content, c.Content))
+	}
+}
+
 type Mark struct {
 	Type string `json:"type,omitempty"`
 }
@@ -115,6 +171,36 @@ func contentArrDiff(a, b []ContentItem) string {
 			extra += b[i].GetString()
 		}
 		resp += "++" + extra
+	}
+	return resp
+}
+
+func content3Diff(a, b, c []ContentItem) string {
+	resp := ""
+	// assuming len a <= len b <= len c
+	for i, val := range a {
+		resp += val.Get3Diff(b[i], c[i])
+	}
+	// arrays are different sizes
+	if !(len(a) == len(b) && len(b) == len(c)) {
+		alen := len(a)
+		blen := len(b)
+		clen := len(c)
+		extra := ""
+		for i := alen; i < blen; i++ {
+			extra += b[i].GetDiff(c[i])
+		}
+		if clen > blen {
+			resp += "++[2]" + extra
+			remainder := ""
+			for i := blen; i < clen; i++ {
+				remainder += c[i].GetString()
+			}
+			resp += "++[3]" + remainder
+		} else {
+			resp += "++[2 & 3]" + extra
+		}
+
 	}
 	return resp
 }

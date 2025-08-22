@@ -24,10 +24,13 @@ func GetCharacter(name string) models.Character {
 	// fmt.Println(character.Result.Data.CurrentUnit.Nodes[0].Skills[1].Desc1.ConvertToJson().GetString())
 	skilldesc1 := character.Result.Data.CurrentUnit.Nodes[0].Skills[1].Desc1.ConvertToJson()
 	skilldesc2 := character.Result.Data.CurrentUnit.Nodes[0].Skills[1].Desc2.ConvertToJson()
+	skilldesc3 := character.Result.Data.CurrentUnit.Nodes[0].Skills[1].Desc3.ConvertToJson()
 	// diff1 := skilldesc1.GetDiff(skilldesc1)
 	diff2 := skilldesc1.GetDiff(skilldesc2)
+	diff3 := skilldesc1.Get3Diff(skilldesc2, skilldesc3)
 	// fmt.Println(diff1)
 	fmt.Println(diff2)
+	fmt.Println(diff3)
 	// return character
 	return character
 }
