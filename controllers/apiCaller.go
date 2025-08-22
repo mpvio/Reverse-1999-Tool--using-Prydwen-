@@ -32,6 +32,15 @@ func GetCharacter(name string) models.Character {
 	return character
 }
 
+func GetPsychube(name string, nodes []models.Node) models.PsychubeDB {
+	for _, node := range nodes {
+		if node.Name == name {
+			return node.ConvertToPsychube()
+		}
+	}
+	return models.PsychubeDB{}
+}
+
 func GetLists() ([]models.Node, []models.Node) {
 	characters := getList(constants.CHARACTERS_ENDPOINT)
 	psychubes := getList(constants.PSYCHUBES_ENDPOINT)

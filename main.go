@@ -1,13 +1,14 @@
 package main
 
 import (
+	"fmt"
 	"golangR99/controllers"
-	"golangR99/view"
 )
 
 func main() {
-	characters, psychubes := controllers.GetLists()
-	view.Display(characters, psychubes)
-	controllers.GetCharacter("sonetto")
-	controllers.GetCharacter("ezio auditore")
+	_, psychubes := controllers.GetLists()
+	// view.Display(characters, psychubes)
+	controllers.GetCharacter("alexios")
+	controllers.GetCharacter("apple")
+	fmt.Println(controllers.GetPsychube("As the Bell Tolls", psychubes))
 }

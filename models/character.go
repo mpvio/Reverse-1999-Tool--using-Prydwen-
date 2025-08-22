@@ -26,22 +26,22 @@ type CharacterNode struct {
 	Rarity             string            `json:"rarity"`
 	Afflatus           string            `json:"afflatus"`
 	DamageType         string            `json:"damageType"`
-	TierListCategory   string            `json:"tierListCategory"`
-	TierListTags       string            `json:"tierListTags"`
+	TierListCategory   string            `json:"tierListCategory,omitempty"`
+	TierListTags       string            `json:"tierListTags,omitempty"`
 	TierEuphoria       string            `json:"tierEuphoria,omitempty"` // optional
-	Tags               []string          `json:"tags"`
+	Tags               []string          `json:"tags,omitempty,omitzero"`
 	AvailableInGlobal  bool              `json:"availableInGlobal"`
 	Rating             Rating            `json:"ratingsNew,omitzero"`  // converted
 	TierComment        TierComment       `json:"tierComment,omitzero"` // converted
 	Skills             []Skill           `json:"skills,omitempty"`     // converted
-	Insights           Inheritance       `json:"inheritance"`          // converted
-	Portray            Portray           `json:"portray"`              // converted
+	Insights           Inheritance       `json:"inheritance,omitzero"` // converted
+	Portray            Portray           `json:"portray,omitzero"`     // converted
 	Pros               DescriptionAsText `json:"pros,omitzero"`
 	Cons               DescriptionAsText `json:"cons,omitzero"`
 	Materials          Materials         `json:"materials,omitzero"` // converted
 	SuggestedPsychubes []Node            `json:"psychubeSuggested,omitempty"`
 	PsychubeComments   DescriptionAsText `json:"psychubeComments,omitzero"`
-	CharacterStats     CharacterStats    `json:"characterStats"`
+	CharacterStats     CharacterStats    `json:"characterStats,omitzero"`
 	Euphoria           []Euphoria        `json:"euphoria,omitempty"`  // converted
 	Resonance          []Resonance       `json:"resonance,omitempty"` // converted
 }

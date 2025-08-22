@@ -15,13 +15,15 @@ type Content struct {
 
 type Node struct {
 	// slug and name also used in character file for recommended psychubes
-	Slug   string `json:"slug"`
-	Name   string `json:"name"`
-	Rarity string `json:"rarity,omitempty"`
+	Slug string `json:"slug"`
+	Name string `json:"name"`
 	// exclusive to psychubes
-	Stats        Stats             `json:"stats,omitzero"`
-	Description1 DescriptionAsText `json:"descriptionLevel1,omitzero"`
-	Description5 DescriptionAsText `json:"descriptionLevel5,omitzero"`
+	Rarity               string            `json:"rarity,omitempty"`
+	Stats                Stats             `json:"stats,omitzero"`
+	Description1         DescriptionAsText `json:"descriptionLevel1,omitzero"`
+	Description5         DescriptionAsText `json:"descriptionLevel5,omitzero"`
+	Tags                 []string          `json:"tags,omitempty,omitzero"`
+	NotAvailableInGlobal bool              `json:"notAvailableInGlobal,omitempty"`
 }
 
 // exclusive to psychubes
