@@ -16,9 +16,9 @@ import (
 // store all psychube data
 var all_psychubes []models.Node
 
-// track selected items
-var selected_characters []string
-var selected_psychubes []string
+// track widget groups
+var cGroup *widget.CheckGroup
+var pGroup *widget.CheckGroup
 
 // labels to keep updated
 var selections *widget.Label
@@ -34,11 +34,14 @@ func Display(characters, psychubes []models.Node) {
 	psyScroll := groupToScroll(nodeToGroup(psychubes))
 	// set containers
 	top := container.NewGridWithColumns(2, charScroll, psyScroll)
-	button := setBottomElement()
-	bottom := container.NewGridWithRows(3, selections, button, results)
+	confirm, clear := setBottomElement()
+	buttons := container.NewGridWithColumns(2, confirm, clear)
+	// place results in a VScroll
+	resultsScroll := container.NewVScroll(results)
+	bottom := container.NewGridWithRows(3, selections, buttons, resultsScroll)
 	// main container
 	main := container.NewVSplit(top, bottom)
-	main.Offset = 0.6
+	main.Offset = 0.8
 	// set to and run window
 	w.SetContent(main)
 	w.Resize(fyne.NewSize(800, 400))
@@ -55,7 +58,7 @@ func nodeToGroup(nodes []models.Node) *widget.CheckGroup {
 	}
 
 	nodeType := nodes[0].GetType()
-	_ = nodeType == constants.CHARACTER
+	isCharacter := nodeType == constants.CHARACTER
 	// set up options
 	options := make([]string, len(nodes))
 	for i, val := range nodes {
@@ -64,43 +67,56 @@ func nodeToGroup(nodes []models.Node) *widget.CheckGroup {
 
 	group := widget.NewCheckGroup(options,
 		func(selected []string) {
-			if nodeType == constants.CHARACTER {
-				selected_characters = selected
-				fmt.Println(selected_characters)
-			} else {
-				selected_psychubes = selected
-				fmt.Println(selected_psychubes)
-			}
 			setSelectedText()
 		},
 	)
 
+	if isCharacter {
+		cGroup = group
+	} else {
+		pGroup = group
+	}
+
 	return group
 }
 
-func setBottomElement() *widget.Button {
+func setBottomElement() (*widget.Button, *widget.Button) {
 	selections = widget.NewLabel("")
 	confirm := widget.NewButton("Confirm", querySelections)
+	clear := widget.NewButton("Clear", clearSelections)
 	results = widget.NewLabel("")
-	return confirm
+	return confirm, clear
 }
 
 func querySelections() {
-	result := controllers.GetAll(selected_characters, selected_psychubes, all_psychubes)
-	results.SetText(strings.Join(result, "\n"))
+	result := controllers.GetAllConcurrently(cGroup.Selected, pGroup.Selected, all_psychubes)
+	new_text := strings.Join(result, "\n")
+	text := results.Text
+	if len(text) == 0 {
+		results.SetText(new_text)
+	} else {
+		results.SetText(fmt.Sprintf("%s\n%s", text, new_text))
+	}
+	clearSelections()
 }
 
 func setSelectedText() {
 	var characters, psychubes string
-	if len(selected_characters) == 0 {
+	if len(cGroup.Selected) == 0 {
 		characters = ""
 	} else {
-		characters = "Characters:" + strings.Join(selected_characters, ", ")
+		characters = "Characters: " + strings.Join(cGroup.Selected, ", ")
 	}
-	if len(selected_psychubes) == 0 {
+	if len(pGroup.Selected) == 0 {
 		psychubes = ""
 	} else {
-		psychubes = "Psychubes:" + strings.Join(selected_psychubes, ", ")
+		psychubes = "Psychubes: " + strings.Join(pGroup.Selected, ", ")
 	}
 	selections.SetText(fmt.Sprintf("%s\n%s", characters, psychubes))
+}
+
+func clearSelections() {
+	cGroup.SetSelected([]string{})
+	pGroup.SetSelected([]string{})
+	setSelectedText()
 }
