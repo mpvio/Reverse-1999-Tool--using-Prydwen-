@@ -11,11 +11,17 @@ func (r Raw) GetString() string {
 }
 
 func (r Raw) GetDiff(other Raw) string {
-	return contentArrDiff(r.Content[0].Content, other.Content[0].Content)
+	if len(r.Content) > 0 && len(other.Content) > 0 {
+		return contentArrDiff(r.Content[0].Content, other.Content[0].Content)
+	}
+	return ""
 }
 
 func (r Raw) Get3Diff(b, c Raw) string {
-	return content3Diff(r.Content[0].Content, b.Content[0].Content, c.Content[0].Content)
+	if len(r.Content) > 0 && len(b.Content) > 0 && len(c.Content) > 0 {
+		return content3Diff(r.Content[0].Content, b.Content[0].Content, c.Content[0].Content)
+	}
+	return ""
 }
 
 func (ci ContentItem) GetString() string {

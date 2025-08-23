@@ -13,6 +13,13 @@ func (n Node) GetType() string {
 	return constants.PSYCHUBE
 }
 
+func (n Node) GetTags() []string {
+	if len(n.Tags) == 0 {
+		return []string{}
+	}
+	return n.Tags
+}
+
 func (n Node) ConvertToPsychube() PsychubeDB {
 	desc1 := n.Description1.ConvertToJson()
 	desc5 := n.Description5.ConvertToJson()
@@ -22,7 +29,7 @@ func (n Node) ConvertToPsychube() PsychubeDB {
 		AvailableInGlobal: !n.NotAvailableInGlobal,
 		Stats:             n.Stats,
 		Desc:              desc1.GetDiff(desc5),
-		Tags:              n.Tags,
+		Tags:              n.GetTags(),
 	}
 }
 

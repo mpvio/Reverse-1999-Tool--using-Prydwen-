@@ -9,6 +9,17 @@ import (
 	"net/http"
 )
 
+func GetAll(characters, psychubes []string, nodes []models.Node) []string {
+	var results []string
+	for _, name := range characters {
+		results = append(results, WriteToFile(GetCharacter(name)))
+	}
+	for _, name := range psychubes {
+		results = append(results, WriteToFile(GetPsychube(name, nodes)))
+	}
+	return results
+}
+
 func GetCharacter(name string) models.CharacterDB {
 	uri := constants.GET_CHARACTER_ENDPOINT(name)
 	content := getBytesFromEndpoint(uri)
